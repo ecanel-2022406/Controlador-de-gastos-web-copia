@@ -1,0 +1,196 @@
+<div class="dashboard-container">
+  <!-- Sidebar / Barra Lateral -->
+  <aside class="sidebar">
+    <div class="sidebar-menu">
+      <button class="menu-item active">
+        <i>🏠</i> Inicio
+      </button>
+      <button class="menu-item">
+        <i>💰</i> Ingresos
+      </button>
+      <button class="menu-item">
+        <i>🛒</i> Gastos
+      </button>
+      <button class="menu-item">
+        <i>📊</i> Transacciones
+      </button>
+      <button class="menu-item">
+        <i>📄</i> Historial
+      </button>
+    </div>
+
+    <div class="sidebar-footer">
+      <button class="logout-btn" (click)="cerrarSesion()">
+        <i>🚪</i> Cerrar sesión
+      </button>
+      <div class="brand-logo">
+        <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg></span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Contenido Principal -->
+  <main class="main-content">
+    <!-- Barra Superior -->
+    <header class="topbar">
+      <div class="topbar-title-group">
+        <button class="menu-toggle">☰</button>
+        <div>
+          <h1>Dashboard Financiero</h1>
+          <p>Resumen general de tu actividad financiera — <strong>NOVATECH</strong></p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <!-- Botón de prueba adicional en la barra si lo necesitas -->
+        <button class="date-display" (click)="probarPeticion()" style="cursor: pointer;" title="Hacer petición de prueba">
+          ⚡ Probar Petición
+        </button>
+        <div class="date-display">
+          📅 24 de Agosto, 2026
+        </div>
+        <button class="icon-btn">🔔</button>
+        <div class="user-profile">
+          <span class="user-avatar">👤</span>
+          <span class="user-name">Usuario ▾</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Tarjetas de Estadísticas Superiores -->
+    <section class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-indicator blue-bar"></div>
+        <div class="stat-content">
+          <div class="stat-icon-title">
+            <div class="icon-circle">👛</div>
+            <span>Ingreso fijo</span>
+          </div>
+          <h2>Q 2,500.00</h2>
+          <p class="positive-trend">↑ +12% mes anterior</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-indicator cyan-bar"></div>
+        <div class="stat-content">
+          <div class="stat-icon-title">
+            <div class="icon-circle cyan">💵</div>
+            <span>Ingreso total</span>
+          </div>
+          <h2>Q 5,840.00</h2>
+          <p class="positive-trend">↑ +18% mes anterior</p>
+        </div>
+      </div>
+
+      <div class="stat-card">
+        <div class="stat-indicator red-bar"></div>
+        <div class="stat-content">
+          <div class="stat-icon-title">
+            <div class="icon-circle red">🛒</div>
+            <span>Gastos</span>
+          </div>
+          <h2>Q 2,230.00</h2>
+          <p class="positive-trend">↑ +8% mes anterior</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Secciones Inferiores (Tablas / Listas) -->
+    <section class="bottom-grid">
+      <!-- Resumen Presupuestal Detallado -->
+      <div class="card budget-card">
+        <div class="card-header">
+          <h3>Resumen Presupuestal Detallado</h3>
+          <button class="options-btn">•••</button>
+        </div>
+        <div class="table-header-row">
+          <span>Categoría</span>
+          <span>Monto/Presupuesto</span>
+        </div>
+        <ul class="budget-list">
+          <li>
+            <div class="category-name"><span class="dot blue"></span> Comida</div>
+            <span class="amount">Q 780.50</span>
+          </li>
+          <li>
+            <div class="category-name"><span class="dot cyan"></span> Transporte</div>
+            <span class="amount">Q 557.50</span>
+          </li>
+          <li>
+            <div class="category-name"><span class="dot red"></span> Vivienda</div>
+            <span class="amount">Q 446.60</span>
+          </li>
+          <li>
+            <div class="category-name"><span class="dot yellow"></span> Servicios</div>
+            <span class="amount">Q 223.30</span>
+          </li>
+          <li>
+            <div class="category-name"><span class="dot purple"></span> Entretenimiento</div>
+            <span class="amount">Q 111.50</span>
+          </li>
+          <li>
+            <div class="category-name"><span class="dot gray"></span> Otros</div>
+            <span class="amount">Q 111.50</span>
+          </li>
+        </ul>
+        <div class="card-footer">
+          <span>Total Presupuestado</span>
+          <strong>Q 2,230.00</strong>
+        </div>
+      </div>
+
+      <!-- Próximos Pagos y Facturas -->
+      <div class="card payments-card">
+        <div class="card-header">
+          <h3>Próximos Pagos y Facturas</h3>
+          <button class="options-btn">•••</button>
+        </div>
+        <ul class="payments-list">
+          <li>
+            <div class="payment-info">
+              <div class="payment-icon red-bg">📅</div>
+              <div>
+                <h4>Renta de Oficina</h4>
+                <p>01 Sep, 2026</p>
+              </div>
+            </div>
+            <span class="amount">Q 1,500.00</span>
+          </li>
+          <li>
+            <div class="payment-info">
+              <div class="payment-icon cyan-bg">💧</div>
+              <div>
+                <h4>Factura de Agua</h4>
+                <p>05 Sep, 2026</p>
+              </div>
+            </div>
+            <span class="amount">Q 115.50</span>
+          </li>
+          <li>
+            <div class="payment-info">
+              <div class="payment-icon blue-bg">💳</div>
+              <div>
+                <h4>Pago Tarjeta Credito</h4>
+                <p>10 Sep, 2026</p>
+              </div>
+            </div>
+            <span class="amount">Q 1,800.00</span>
+          </li>
+          <li>
+            <div class="payment-info">
+              <div class="payment-icon purple-bg">🛡️</div>
+              <div>
+                <h4>Seguro de Auto</h4>
+                <p>15 Sep, 2026</p>
+              </div>
+            </div>
+            <span class="amount">Q 550.00</span>
+          </li>
+        </ul>
+        <div class="card-footer-text">
+          Mostrando 4 de 6 pagos próximos
+        </div>
+      </div>
+    </section>
+  </main>
+</div>
