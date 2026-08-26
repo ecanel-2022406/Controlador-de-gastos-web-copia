@@ -56,19 +56,19 @@ export class LoginComponent {
 
   enviarFormulario() {
     if (this.esRegistro) {
-      // Registrar
+
       this.authService.register(this.usuario).subscribe({
         next: (res: any) => {
           alert('¡Usuario registrado con éxito! Ahora inicia sesión.');
-          this.esRegistro = false; // Cambiar a modo login
-          this.usuario.password = ''; // Limpiar contraseña
+          this.esRegistro = false;
+          this.usuario.password = '';
         },
         error: (err) => {
           alert(err.error?.mensaje || 'Error al registrarse');
         }
       });
     } else {
-      // Iniciar sesión
+
       this.authService.login({ email: this.usuario.email, password: this.usuario.password }).subscribe({
         next: (res: any) => {
           localStorage.setItem('token', res.token);

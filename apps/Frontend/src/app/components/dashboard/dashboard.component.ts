@@ -13,11 +13,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private intervalo: any;
 
+  fechaActual: Date = new Date();
+  nombreUsuario: string = '';
+
+  ingresoFijo: number = 0;
+  tendenciaIngresoFijo: string = 'Sin registros';
+
+  ingresoTotal: number = 0;
+  tendenciaIngresoTotal: string = 'Sin registros';
+
+  gastosTotales: number = 0;
+  tendenciaGastos: string = 'Sin registros';
+
+  totalPresupuestado: number = 0;
+  listaPresupuesto: any[] = [];
+  listaPagos: any[] = [];
+
   ngOnInit() {
-    // Valida la expiración del token cada segundo
+
     this.intervalo = setInterval(() => {
       this.verificarExpiracion();
     }, 1000);
+
+    const usuarioGuardado = localStorage.getItem('usuario');
+    if (usuarioGuardado) {
+      try {
+        const datos = JSON.parse(usuarioGuardado);
+        this.nombreUsuario = datos.nombre || '';
+      } catch (e) {
+        this.nombreUsuario = '';
+      }
+    }
   }
 
   ngOnDestroy() {
@@ -26,17 +52,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  // Método de prueba para peticiones si lo requieres
-  probarPeticion() {
-    console.log('Haciendo petición de prueba al servidor...');
-    // Aquí puedes agregar tu lógica con HttpClient si lo deseas
-  }
-
   cerrarSesion() {
     if (this.intervalo) {
       clearInterval(this.intervalo);
     }
     localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
     this.router.navigate(['/login']);
   }
 
@@ -66,6 +87,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       clearInterval(this.intervalo);
     }
     localStorage.removeItem('token');
+    localStorage.removeItem('usuario');
     this.router.navigate(['/login']);
   }
 }

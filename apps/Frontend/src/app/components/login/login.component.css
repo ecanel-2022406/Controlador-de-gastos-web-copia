@@ -92,7 +92,6 @@ input:focus {
 button {
     width: 100%;
     padding: 14px;
-    /* Degradado idéntico al hexágono brillante del logo (Azul eléctrico a cian) */
     background: linear-gradient(135deg, #0055ff 0%, #00b4fc 100%);
     color: white;
     border: none;
