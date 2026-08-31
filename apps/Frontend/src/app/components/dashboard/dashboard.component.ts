@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
@@ -10,84 +10,71 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  private router = inject(Router);
-  private intervalo: any;
-
   fechaActual: Date = new Date();
   nombreUsuario: string = '';
+  
+  menuActivo: string = 'inicio';
+  sidebarAbierto: boolean = true;
 
   ingresoFijo: number = 0;
-  tendenciaIngresoFijo: string = 'Sin registros';
-
   ingresoTotal: number = 0;
-  tendenciaIngresoTotal: string = 'Sin registros';
-
   gastosTotales: number = 0;
-  tendenciaGastos: string = 'Sin registros';
 
-  totalPresupuestado: number = 0;
   listaPresupuesto: any[] = [];
   listaPagos: any[] = [];
 
-  ngOnInit() {
+  totalPresupuestado: number = 0;
 
-    this.intervalo = setInterval(() => {
-      this.verificarExpiracion();
-    }, 1000);
+  private intervaloFecha: any;
 
-    const usuarioGuardado = localStorage.getItem('usuario');
-    if (usuarioGuardado) {
-      try {
-        const datos = JSON.parse(usuarioGuardado);
-        this.nombreUsuario = datos.nombre || '';
-      } catch (e) {
-        this.nombreUsuario = '';
-      }
+  constructor(private router: Router) {}
+
+  ngOnInit(): void {
+    this.nombreUsuario = localStorage.getItem('nombreUsuario') || localStorage.getItem('usuario') || 'Usuario';
+
+    this.intervaloFecha = setInterval(() => {
+      this.fechaActual = new Date();
+    }, 60000);
+
+    this.cargarDatosReales();
+  }
+
+  ngOnDestroy(): void {
+    if (this.intervaloFecha) {
+      clearInterval(this.intervaloFecha);
     }
   }
 
-  ngOnDestroy() {
-    if (this.intervalo) {
-      clearInterval(this.intervalo);
-    }
+  toggleSidebar(): void {
+    this.sidebarAbierto = !this.sidebarAbierto;
   }
 
-  cerrarSesion() {
-    if (this.intervalo) {
-      clearInterval(this.intervalo);
-    }
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario');
+  seleccionarMenu(opcion: string): void {
+    this.menuActivo = opcion;
+  }
+
+  cerrarSesion(): void {
+    this.verificarExpiracion();
+    this.salirAlLogin();
+  }
+
+  verificarExpiracion(): void {
+    localStorage.clear();
+    sessionStorage.clear();
+  }
+
+  salirAlLogin(): void {
     this.router.navigate(['/login']);
   }
 
-  verificarExpiracion() {
-    const token = localStorage.getItem('token');
-    
-    if (!token) {
-      this.salirAlLogin();
-      return;
-    }
-
-    try {
-      const payloadBase64 = token.split('.')[1];
-      const payloadDecoded = JSON.parse(atob(payloadBase64));
-      const expiracionMs = payloadDecoded.exp * 1000;
-      
-      if (Date.now() >= expiracionMs) {
-        this.salirAlLogin();
-      }
-    } catch (error) {
-      this.salirAlLogin();
+  calcularTotalPresupuesto(): void {
+    if (this.listaPresupuesto && this.listaPresupuesto.length > 0) {
+      this.totalPresupuestado = this.listaPresupuesto.reduce((acc, item) => acc + (item.monto || 0), 0);
+    } else {
+      this.totalPresupuestado = 0;
     }
   }
 
-  salirAlLogin() {
-    if (this.intervalo) {
-      clearInterval(this.intervalo);
-    }
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario');
-    this.router.navigate(['/login']);
+  cargarDatosReales(): void {
   }
 }

@@ -1,33 +1,36 @@
-<div class="contenedor-principal">
+<div class="contenedor-principal" [class.sidebar-colapsado]="!sidebarAbierto">
 
-  <aside class="barra-lateral">
+  <aside class="barra-lateral" *ngIf="sidebarAbierto">
     <div class="menu-lateral">
-      <button class="opcion-menu activo">
-        <i></i> Inicio
+      <button class="opcion-menu" [class.activo]="menuActivo === 'inicio'" (click)="seleccionarMenu('inicio')">
+        <img src="images/inicio.png" alt="Icono Inicio" class="icono-menu-img"> Inicio
       </button>
-      <button class="opcion-menu">
-        <i></i> Ingresos
+  
+      <button class="opcion-menu" [class.activo]="menuActivo === 'ingresos'" (click)="seleccionarMenu('ingresos')">
+        <img src="images/ingresos.png" alt="Icono Ingresos" class="icono-menu-img"> Ingresos
       </button>
-      <button class="opcion-menu">
-        <i></i> Gastos
+  
+      <button class="opcion-menu" [class.activo]="menuActivo === 'gastos'" (click)="seleccionarMenu('gastos')">
+        <img src="images/gastos.png" alt="Icono Gastos" class="icono-menu-img"> Gastos
       </button>
-      <button class="opcion-menu">
-        <i></i> Transacciones
+  
+      <button class="opcion-menu" [class.activo]="menuActivo === 'transacciones'" (click)="seleccionarMenu('transacciones')">
+        <img src="images/transacciones.png" alt="Icono Transacciones" class="icono-menu-img"> Transacciones
       </button>
-      <button class="opcion-menu">
-        <i></i> Historial
+  
+      <button class="opcion-menu" [class.activo]="menuActivo === 'historial'" (click)="seleccionarMenu('historial')">
+        <img src="images/historial.png" alt="Icono Historial" class="icono-menu-img"> Historial
       </button>
     </div>
 
     <div class="pie-lateral">
       <button class="boton-salir" (click)="cerrarSesion()">
-        <i></i> Cerrar sesión
+        <span class="icono-css icono-salir-css"></span> Cerrar sesión
       </button>
 
       <div class="logo-hexagono-container">
-        <img src="C:/Proyecto_TypeScript_2022406/Captura_de_pantalla_2026-08-26_143323-removebg-preview.png" alt="Logo" class="logo-imagen">
+        <img src="images/Designer-removebg-preview.png" alt="Logo Kinal" class="imagen-logo-kinal">
       </div>
-      
     </div>
   </aside>
 
@@ -35,8 +38,8 @@
 
     <header class="barra-superior">
       <div class="grupo-titulo">
-        <button class="boton-menu">
-          <i>☰</i>
+        <button class="boton-menu" (click)="toggleSidebar()">
+          <span class="icono-hamburguesa"></span>
         </button>
         <div>
           <h1>Dashboard Financiero</h1>
@@ -46,19 +49,19 @@
       
       <div class="acciones-superiores">
         <div class="etiqueta-fecha">
-          <i></i> {{ fechaActual | date:'d \'de\' MMMM, y' }}
+          <img src="images/fecha.png" alt="Calendario" class="imagen-icono-extra"> {{ fechaActual | date:'dd \'de\' MMMM, yyyy' }}
         </div>
         
         <div class="contenedor-notificacion">
           <button class="boton-icono">
-            <i></i>
+            <img src="images/notificacion.png" alt="Notificación" class="imagen-icono-extra">
             <span class="punto-notificacion"></span>
           </button>
         </div>
 
         <div class="perfil-usuario">
           <div class="avatar-usuario">
-            <i></i>
+            <img src="images/usuario.png" alt="Perfil" class="imagen-icono-extra">
           </div>
           <span class="nombre-usuario">{{ nombreUsuario || 'Usuario' }}</span>
           <span class="flecha-dropdown">▾</span>
@@ -71,11 +74,13 @@
         <div class="indicador-tarjeta barra-azul"></div>
         <div class="contenido-stat">
           <div class="titulo-icono-stat">
-            <div class="circulo-icono"></div>
+            <div class="circulo-icono azul-suave">
+              <span class="icono-css icono-billetera-css"></span>
+            </div>
             <span>Ingreso fijo</span>
           </div>
-          <h2>Q {{ ingresoFijo | number:'1.2-2' }}</h2>
-          <p class="tendencia-positiva">{{ tendenciaIngresoFijo }}</p>
+          <h2>{{ ingresoFijo !== null && ingresoFijo !== undefined && ingresoFijo !== 0 ? ('Q ' + (ingresoFijo | number:'1.2-2')) : 'Sin registros' }}</h2>
+          <p class="tendencia-positiva" *ngIf="ingresoFijo"><span class="flecha-tendencia"></span> Activo</p>
         </div>
       </div>
 
@@ -83,11 +88,13 @@
         <div class="indicador-tarjeta barra-cian"></div>
         <div class="contenido-stat">
           <div class="titulo-icono-stat">
-            <div class="circulo-icono cian"></div>
+            <div class="circulo-icono cian-suave">
+              <span class="icono-css icono-moneda-css"></span>
+            </div>
             <span>Ingreso total</span>
           </div>
-          <h2>Q {{ ingresoTotal | number:'1.2-2' }}</h2>
-          <p class="tendencia-positiva">{{ tendenciaIngresoTotal }}</p>
+          <h2>{{ ingresoTotal !== null && ingresoTotal !== undefined && ingresoTotal !== 0 ? ('Q ' + (ingresoTotal | number:'1.2-2')) : 'Sin registros' }}</h2>
+          <p class="tendencia-positiva" *ngIf="ingresoTotal"><span class="flecha-tendencia"></span> Activo</p>
         </div>
       </div>
 
@@ -95,15 +102,83 @@
         <div class="indicador-tarjeta barra-roja"></div>
         <div class="contenido-stat">
           <div class="titulo-icono-stat">
-            <div class="circulo-icono rojo">🛒</div>
+            <div class="circulo-icono rojo-suave">
+              <span class="icono-css icono-carrito-css"></span>
+            </div>
             <span>Gastos</span>
           </div>
-          <h2>Q {{ gastosTotales | number:'1.2-2' }}</h2>
-          <p class="tendencia-positiva">{{ tendenciaGastos }}</p>
+          <h2>{{ gastosTotales !== null && gastosTotales !== undefined && gastosTotales !== 0 ? ('Q ' + (gastosTotales | number:'1.2-2')) : 'Sin registros' }}</h2>
+          <p class="tendencia-positiva alerta" *ngIf="gastosTotales"><span class="flecha-tendencia alerta"></span> Registrado</p>
         </div>
       </div>
     </section>
 
+    <section class="seccion-inferior-grid">
+      <div class="tarjeta-panel presupuesto-panel">
+        <div class="panel-header">
+          <h3>Resumen Presupuestal Detallado</h3>
+          <button class="boton-opciones"><span class="puntos-menu"></span></button>
+        </div>
+        
+        <ng-container *ngIf="listaPresupuesto && listaPresupuesto.length > 0; else sinPresupuesto">
+          <div class="tabla-encabezado">
+            <span>Categoría</span>
+            <span>Monto/Presupuesto</span>
+          </div>
+          <div class="lista-items">
+            <div class="fila-item" *ngFor="let item of listaPresupuesto">
+              <div class="item-info"><span class="punto-color azul"></span> {{ item.categoria || item.nombre }}</div>
+              <span class="item-monto">Q {{ item.monto | number:'1.2-2' }}</span>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <span>Total Presupuestado</span>
+            <strong>Q {{ totalPresupuestado | number:'1.2-2' }}</strong>
+          </div>
+        </ng-container>
+
+        <ng-template #sinPresupuesto>
+          <div class="estado-vacio">
+            <div class="icono-vacio-css"></div>
+            <p>No hay registros disponibles</p>
+          </div>
+        </ng-template>
+      </div>
+
+      <div class="tarjeta-panel pagos-panel">
+        <div class="panel-header">
+          <h3>Próximos Pagos y Facturas</h3>
+          <button class="boton-opciones"><span class="puntos-menu"></span></button>
+        </div>
+
+        <ng-container *ngIf="listaPagos && listaPagos.length > 0; else sinPagos">
+          <div class="lista-items">
+            <div class="fila-pago" *ngFor="let pago of listaPagos">
+              <div class="pago-detalle-izq">
+                <div class="circulo-icono azul-suave">
+                  <img src="images/billetera.png" alt="Billetera" class="imagen-icono-extra">
+                </div>
+                <div>
+                  <strong>{{ pago.titulo || pago.nombre }}</strong>
+                  <small>{{ pago.fecha | date:'dd MMM, yyyy' }}</small>
+                </div>
+              </div>
+              <span class="item-monto">Q {{ pago.monto | number:'1.2-2' }}</span>
+            </div>
+          </div>
+          <div class="panel-footer simple">
+            <span>Mostrando pagos programados</span>
+          </div>
+        </ng-container>
+
+        <ng-template #sinPagos>
+          <div class="estado-vacio">
+            <div class="icono-vacio-css"></div>
+            <p>No hay pagos próximos</p>
+          </div>
+        </ng-template>
+      </div>
+    </section>
 
   </main>
 </div>
