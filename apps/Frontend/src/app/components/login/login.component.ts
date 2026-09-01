@@ -12,6 +12,11 @@ import { AuthService } from '../../services/auth.service';
     <div class="login-container">
       <form class="login-card" (ngSubmit)="enviarFormulario()">
         <div class="login-header">
+          <!-- Imagen y texto colorido de Novatech lado a lado -->
+          <div class="logo-wrapper">
+            <img src="images/logo.png" alt="Novatech Logo" class="logo-img" />
+            <h1>NOVATECH</h1>
+          </div>
           <h2>{{ esRegistro ? 'Crear Cuenta' : 'Iniciar Sesión' }}</h2>
           <p>{{ esRegistro ? 'Regístrate para comenzar' : 'Ingresa tus credenciales para acceder' }}</p>
         </div>
@@ -34,7 +39,7 @@ import { AuthService } from '../../services/auth.service';
 
         <button type="submit">{{ esRegistro ? 'Registrarse' : 'Entrar' }}</button>
         
-        <p class="toggle-mode" style="text-align: center; margin-top: 15px; cursor: pointer; color: #3b82f6;" (click)="esRegistro = !esRegistro">
+        <p class="toggle-mode" (click)="esRegistro = !esRegistro">
           {{ esRegistro ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Regístrate' }}
         </p>
       </form>
@@ -56,7 +61,6 @@ export class LoginComponent {
 
   enviarFormulario() {
     if (this.esRegistro) {
-
       this.authService.register(this.usuario).subscribe({
         next: (res: any) => {
           alert('¡Usuario registrado con éxito! Ahora inicia sesión.');
@@ -68,10 +72,14 @@ export class LoginComponent {
         }
       });
     } else {
-
       this.authService.login({ email: this.usuario.email, password: this.usuario.password }).subscribe({
         next: (res: any) => {
+
           localStorage.setItem('token', res.token);
+          
+          const nombreEncontrado = res.nombre || res.usuario?.nombre || this.usuario.email.split('@')[0];
+          localStorage.setItem('nombreUsuario', nombreEncontrado);
+
           this.router.navigate(['/dashboard']);
         },
         error: (err) => {

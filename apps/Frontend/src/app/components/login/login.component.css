@@ -1,3 +1,16 @@
+:host {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    min-height: 100vh;
+    background: radial-gradient(circle at 50% 30%, #081128 0%, #03060f 60%, #010204 100%);
+    background-attachment: fixed;
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,57 +18,70 @@
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    background: radial-gradient(circle at 50% 30%, #0d1b3e 0%, #060913 60%, #020408 100%);
-    background-attachment: fixed;
-}
-
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100%;
-    min-height: 100vh;
     padding: 20px;
 }
 
 .login-card {
-    background-color: rgba(13, 20, 38, 0.85);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: 45px 40px;
+    background-color: rgba(6, 11, 25, 0.88);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    padding: 40px 35px;
     border-radius: 20px;
-    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 162, 255, 0.15);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.7), 0 0 35px rgba(0, 180, 252, 0.12);
     width: 100%;
     max-width: 420px;
     text-align: center;
-    border: 1px solid rgba(0, 180, 252, 0.25);
+    border: 1px solid rgba(0, 180, 252, 0.3);
 }
 
 .login-header {
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+}
+
+.logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.logo-img {
+    height: 65px;
+    width: auto;
+    object-fit: contain;
+}
+
+.logo-wrapper h1 {
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, #ffffff 20%, #00b4fc 60%, #0055ff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .login-header h2 {
-    font-size: 26px;
+    font-size: 24px;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     letter-spacing: 0.5px;
 }
 
 .login-header p {
-    font-size: 14px;
+    font-size: 13px;
     color: #94a3b8;
 }
 
 .form-group {
     text-align: left;
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 label {
@@ -70,7 +96,7 @@ label {
 input {
     width: 100%;
     padding: 13px 16px;
-    background-color: rgba(6, 9, 19, 0.6);
+    background-color: rgba(3, 6, 15, 0.75);
     border: 1px solid #1e293b;
     border-radius: 10px;
     font-size: 14px;
@@ -85,7 +111,7 @@ input::placeholder {
 input:focus {
     outline: none;
     border-color: #00b4fc;
-    background-color: rgba(6, 9, 19, 0.9);
+    background-color: rgba(3, 6, 15, 0.95);
     box-shadow: 0 0 0 3px rgba(0, 180, 252, 0.25);
 }
 
@@ -96,17 +122,17 @@ button {
     color: white;
     border: none;
     border-radius: 10px;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 600;
     cursor: pointer;
-    margin-top: 15px;
+    margin-top: 10px;
     box-shadow: 0 8px 20px rgba(0, 140, 255, 0.35);
     transition: all 0.3s ease;
 }
 
 button:hover {
-    background: linear-gradient(135deg, #0047db 0%, #00a2e8 100%);
-    box-shadow: 0 10px 25px rgba(0, 140, 255, 0.5);
+    background: linear-gradient(135deg, #0042cc 0%, #009ce0 100%);
+    box-shadow: 0 10px 25px rgba(0, 180, 252, 0.5);
     transform: translateY(-2px);
 }
 
@@ -114,17 +140,18 @@ button:active {
     transform: translateY(0);
 }
 
-.forgot-password {
+.toggle-mode {
     display: block;
-    margin-top: 20px;
+    text-align: center;
+    margin-top: 18px;
     font-size: 13px;
     color: #38bdf8;
-    text-decoration: none;
+    cursor: pointer;
     font-weight: 500;
     transition: color 0.2s ease;
 }
 
-.forgot-password:hover {
+.toggle-mode:hover {
     color: #7dd3fc;
     text-decoration: underline;
 }

@@ -30,7 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.nombreUsuario = localStorage.getItem('nombreUsuario') || localStorage.getItem('usuario') || 'Usuario';
+    this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Usuario';
 
     this.intervaloFecha = setInterval(() => {
       this.fechaActual = new Date();
