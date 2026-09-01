@@ -10,9 +10,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit, OnDestroy {
+
   fechaActual: Date = new Date();
   nombreUsuario: string = '';
-  
+
   menuActivo: string = 'inicio';
   sidebarAbierto: boolean = true;
 
@@ -30,11 +31,15 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(private router: Router) {}
 
   ngOnInit(): void {
-    this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Usuario';
+    this.nombreUsuario =
+      localStorage.getItem('nombreUsuario') || 'Usuario';
+
+    this.verificarToken();
 
     this.intervaloFecha = setInterval(() => {
       this.fechaActual = new Date();
-    }, 60000);
+      this.verificarToken();
+    }, 1000);
 
     this.cargarDatosReales();
   }
@@ -42,6 +47,43 @@ export class DashboardComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     if (this.intervaloFecha) {
       clearInterval(this.intervaloFecha);
+    }
+  }
+
+  verificarToken(): void {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    try {
+      const partes = token.split('.');
+
+      if (partes.length !== 3) {
+        throw new Error('Token inválido');
+      }
+
+      const payload: any = JSON.parse(
+        atob(partes[1])
+      );
+
+      const expiracion = payload.exp * 1000;
+
+      if (Date.now() >= expiracion) {
+        alert('La sesión ha expirado');
+
+        localStorage.clear();
+        sessionStorage.clear();
+
+        this.router.navigate(['/login']);
+      }
+    } catch (error) {
+      localStorage.clear();
+      sessionStorage.clear();
+
+      this.router.navigate(['/login']);
     }
   }
 
@@ -54,27 +96,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   cerrarSesion(): void {
-    this.verificarExpiracion();
-    this.salirAlLogin();
-  }
-
-  verificarExpiracion(): void {
     localStorage.clear();
     sessionStorage.clear();
-  }
 
-  salirAlLogin(): void {
     this.router.navigate(['/login']);
   }
 
   calcularTotalPresupuesto(): void {
-    if (this.listaPresupuesto && this.listaPresupuesto.length > 0) {
-      this.totalPresupuestado = this.listaPresupuesto.reduce((acc, item) => acc + (item.monto || 0), 0);
+    if (this.listaPresupuesto?.length > 0) {
+      this.totalPresupuestado = this.listaPresupuesto.reduce(
+        (acc, item) => acc + (item.monto || 0),
+        0
+      );
     } else {
       this.totalPresupuestado = 0;
     }
   }
 
-  cargarDatosReales(): void {
-  }
+  cargarDatosReales(): void {}
 }
+``

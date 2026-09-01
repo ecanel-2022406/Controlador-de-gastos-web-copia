@@ -8,43 +8,7 @@ import { AuthService } from '../../services/auth.service';
   selector: 'app-login',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  template: `
-    <div class="login-container">
-      <form class="login-card" (ngSubmit)="enviarFormulario()">
-        <div class="login-header">
-          <!-- Imagen y texto colorido de Novatech lado a lado -->
-          <div class="logo-wrapper">
-            <img src="images/logo.png" alt="Novatech Logo" class="logo-img" />
-            <h1>NOVATECH</h1>
-          </div>
-          <h2>{{ esRegistro ? 'Crear Cuenta' : 'Iniciar Sesión' }}</h2>
-          <p>{{ esRegistro ? 'Regístrate para comenzar' : 'Ingresa tus credenciales para acceder' }}</p>
-        </div>
-
-        <!-- Campo Nombre (Solo aparece si es registro) -->
-        <div class="form-group" *ngIf="esRegistro">
-          <label>Nombre</label>
-          <input type="text" [(ngModel)]="usuario.nombre" name="nombre" placeholder="Tu nombre" [required]="esRegistro" />
-        </div>
-
-        <div class="form-group">
-          <label>Correo Electrónico</label>
-          <input type="email" [(ngModel)]="usuario.email" name="email" placeholder="nombre@ejemplo.com" required />
-        </div>
-
-        <div class="form-group">
-          <label>Contraseña</label>
-          <input type="password" [(ngModel)]="usuario.password" name="password" placeholder="••••••••" required />
-        </div>
-
-        <button type="submit">{{ esRegistro ? 'Registrarse' : 'Entrar' }}</button>
-        
-        <p class="toggle-mode" (click)="esRegistro = !esRegistro">
-          {{ esRegistro ? '¿Ya tienes cuenta? Inicia sesión' : '¿No tienes cuenta? Regístrate' }}
-        </p>
-      </form>
-    </div>
-  `,
+  templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
@@ -74,7 +38,6 @@ export class LoginComponent {
     } else {
       this.authService.login({ email: this.usuario.email, password: this.usuario.password }).subscribe({
         next: (res: any) => {
-
           localStorage.setItem('token', res.token);
           
           const nombreEncontrado = res.nombre || res.usuario?.nombre || this.usuario.email.split('@')[0];

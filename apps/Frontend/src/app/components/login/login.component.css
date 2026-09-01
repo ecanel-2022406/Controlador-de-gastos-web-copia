@@ -39,9 +39,16 @@
     border: 1px solid rgba(0, 180, 252, 0.3);
 }
 
+.login-card:hover {
+    transform: translatey(9px);
+    transition: transform 0.3s ease;
+}
+
 .login-header {
     margin-bottom: 25px;
 }
+
+
 
 .logo-wrapper {
     display: flex;

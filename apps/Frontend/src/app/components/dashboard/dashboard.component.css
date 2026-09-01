@@ -105,11 +105,9 @@
     justify-content: center;
     align-items: center;
     width: 100%;
-    height: 130px; /* Tamaño original que tenías */
-    background-color: rgba(15, 23, 42, 0.4);
+    height: 130px; 
     border-radius: 12px;
     overflow: hidden;
-    padding: 4px;
     box-sizing: border-box;
 }
 
