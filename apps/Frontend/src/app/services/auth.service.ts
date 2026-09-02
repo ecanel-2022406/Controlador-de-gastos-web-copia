@@ -17,6 +17,13 @@ export class AuthService {
       tap(response => {
         if (response && response.token) {
           localStorage.setItem('token', response.token);
+          
+          // <-- NUEVO: Guardar el correo o el ID del usuario para aislar sus datos -->
+          if (response.usuario && response.usuario.email) {
+            localStorage.setItem('emailUsuario', response.usuario.email);
+          } else if (credentials.email) {
+            localStorage.setItem('emailUsuario', credentials.email);
+          }
         }
       })
     );
