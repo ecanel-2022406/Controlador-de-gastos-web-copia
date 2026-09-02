@@ -44,7 +44,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.nombreUsuario = localStorage.getItem('nombreUsuario') || 'Usuario';
     this.verificarToken();
 
-    // Obliga al servicio global a refrescar los datos del usuario actual
     this.ingresosService.recargarDatosUsuario();
 
     const usuarioKey = this.nombreUsuario.toLowerCase().trim();
@@ -128,7 +127,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   cerrarSesion(): void {
-    // IMPORTANTE: Ya NO usamos localStorage.clear() para no borrar los datos guardados de los usuarios
     this.limpiarSesionLocal();
     this.router.navigate(['/login']);
   }

@@ -16,7 +16,7 @@ export class IngresosComponent implements OnInit {
   ingresoFijoGuardado: number = 0;
 
   conceptoExtraInput: string = '';
-  montoExtraInput: number | null = null;
+  montoExtraInput: number | null = null;  
   fechaExtraInput: string = '';
 
   listaPresupuesto: any[] = [];
@@ -37,20 +37,17 @@ export class IngresosComponent implements OnInit {
   }
 
   guardarIngresoFijo(): void {
-    if (!this.montoFijoInput || this.montoFijoInput <= 0) return;
-    
-    const nuevoRegistro = {
-      categoria: 'Salario Fijo',
-      monto: this.montoFijoInput,
-      frecuencia: this.frecuenciaFijoInput,
-      fecha: new Date().toLocaleDateString()
-    };
+    if (this.montoFijoInput !== null) {
+      const nuevoIngresoFijo = {      
 
-    // Guardamos en la lista y actualizamos el ingreso fijo global usando la variable correcta
-    this.ingresosService.agregarIngreso(nuevoRegistro);
-    this.ingresosService.guardarIngresoFijo(this.montoFijoInput);
-    
-    this.montoFijoInput = null;
+        categoria: 'Salario Fijo',
+        monto: this.montoFijoInput,
+        frecuencia: this.frecuenciaFijoInput, 
+        fecha: new Date().toLocaleDateString()
+      };
+      this.ingresosService.agregarIngreso(nuevoIngresoFijo);
+      this.montoFijoInput = null; 
+    }
   }
 
   guardarIngresoExtra(): void {
@@ -73,3 +70,6 @@ export class IngresosComponent implements OnInit {
     this.totalGeneralAcumulado = this.totalPresupuestado;
   }
 }
+
+
+

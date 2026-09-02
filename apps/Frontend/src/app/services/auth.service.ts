@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  
+
   private apiUrl = 'http://localhost:4000/api/auth';
 
   constructor(private http: HttpClient) {}
@@ -17,8 +17,7 @@ export class AuthService {
       tap(response => {
         if (response && response.token) {
           localStorage.setItem('token', response.token);
-          
-          // <-- NUEVO: Guardar el correo o el ID del usuario para aislar sus datos -->
+                    
           if (response.usuario && response.usuario.email) {
             localStorage.setItem('emailUsuario', response.usuario.email);
           } else if (credentials.email) {

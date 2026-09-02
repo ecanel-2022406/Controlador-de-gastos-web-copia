@@ -8,13 +8,11 @@ export class IngresosService {
 
   constructor() {}
 
-  // Llave única y normalizada por usuario para evitar pérdida de datos o mezclas
   private obtenerClaveUsuario(claveBase: string): string {
     const usuarioActual = localStorage.getItem('nombreUsuario') || 'default';
     return `${claveBase}_${usuarioActual.toLowerCase().trim()}`;
   }
 
-  // --- INGRESO FIJO ---
   private getIngresoFijoInicial(): number {
     const clave = this.obtenerClaveUsuario('ingresoFijo');
     return Number(localStorage.getItem(clave)) || 0;
@@ -29,7 +27,6 @@ export class IngresosService {
     this.ingresoFijoSource.next(monto);
   }
 
-  // --- LISTA DE INGRESOS ---
   private getIngresosIniciales(): any[] {
     const clave = this.obtenerClaveUsuario('listaIngresos');
     return JSON.parse(localStorage.getItem(clave) || '[]');
@@ -50,7 +47,6 @@ export class IngresosService {
     }
   }
 
-  // --- LISTA DE GASTOS ---
   private getGastosIniciales(): any[] {
     const clave = this.obtenerClaveUsuario('listaGastos');
     return JSON.parse(localStorage.getItem(clave) || '[]');
@@ -67,7 +63,6 @@ export class IngresosService {
     this.listaGastosSource.next(listaActualizada);
   }
 
-  // Recarga los datos al iniciar sesión o cambiar de usuario
   recargarDatosUsuario() {
     this.ingresoFijoSource.next(this.getIngresoFijoInicial());
     this.listaIngresosSource.next(this.getIngresosIniciales());
