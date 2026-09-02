@@ -1,0 +1,108 @@
+<div class="contenedor-ingresos-contenido">
+
+  <section class="cuadricula-estadisticas">
+    
+    <div class="tarjeta-stat tarjeta-grande">
+      <div class="contenido-stat">
+        <h3>Ingrese su ingreso fijo</h3>
+        <div class="form-ingreso-fila">
+          <div class="input-grupo">
+            <span class="sufijo-q">Q</span>
+            <input type="number" [(ngModel)]="montoFijoInput" placeholder="Monto" name="montoFijo">
+          </div>
+          <select [(ngModel)]="frecuenciaFijoInput" name="frecuenciaFijo">
+            <option value="Quincenal">Quincenal</option>
+            <option value="Mensual">Mensual</option>
+            <option value="Semanal">Semanal</option>
+          </select>
+          <button type="button" class="btn-guardar-fijo" (click)="guardarIngresoFijo()">Guardar Ingreso Fijo</button>
+        </div>
+        <div class="mini-resumen-fila">
+          <span><span class="punto-verde"></span> {{ listaPresupuesto.length > 0 ? listaPresupuesto[0].categoria : 'Sin registros' }}</span>
+          <strong class="monto-verde">Q {{ listaPresupuesto.length > 0 ? (listaPresupuesto[0].monto | number:'1.2-2') : '0.00' }}</strong>
+          <span class="fecha-mini">{{ listaPresupuesto.length > 0 ? listaPresupuesto[0].fecha : '--' }}</span>
+        </div>
+        <p class="etiqueta-abajo-mini">Mostrando Simplificado de Ingresos</p>
+      </div>
+    </div>
+
+    <div class="tarjeta-stat tarjeta-grande">
+      <div class="contenido-stat">
+        <h3>Ingrese su ingreso extra</h3>
+        <div class="form-ingreso-fila">
+          <input type="text" [(ngModel)]="conceptoExtraInput" placeholder="Concepto" name="conceptoExtra">
+          <div class="input-grupo">
+            <span class="sufijo-q">Q</span>
+            <input type="number" [(ngModel)]="montoExtraInput" placeholder="Monto" name="montoExtra">
+          </div>
+          <input type="text" [(ngModel)]="fechaExtraInput" placeholder="Fecha (Ej: 22 Ago)" name="fechaExtra">
+          <button type="button" class="btn-guardar-extra" (click)="guardarIngresoExtra()">Añadir Ingreso Extra</button>
+        </div>
+        <div class="mini-resumen-fila">
+          <span><span class="punto-verde"></span> {{ listaPresupuesto.length > 0 ? listaPresupuesto[0].categoria : 'Sin registros' }}</span>
+          <strong class="monto-verde">Q {{ listaPresupuesto.length > 0 ? (listaPresupuesto[0].monto | number:'1.2-2') : '0.00' }}</strong>
+          <span class="fecha-mini">{{ listaPresupuesto.length > 0 ? listaPresupuesto[0].fecha : '--' }}</span>
+        </div>
+        <p class="etiqueta-abajo-mini">Mostrando entradas recientes</p>
+      </div>
+    </div>
+
+  </section>
+
+  <section class="seccion-inferior-grid">
+    <div class="tarjeta-panel presupuesto-panel tabla-compacta-container" style="width: 100%;">
+      <div class="panel-header">
+        <h3>Historial Simplificado de Ingresos</h3>
+      </div>
+      
+      <ng-container *ngIf="listaPresupuesto && listaPresupuesto.length > 0; else sinPresupuesto">
+        <div class="tabla-encabezado">
+          <span>Concepto</span>
+          <span>Frecuencia / Tipo</span>
+          <span>Fechas</span>
+          <span class="alinear-derecha">Monto</span>
+        </div>
+        <div class="lista-items">
+          <div class="fila-item" *ngFor="let item of listaPresupuesto">
+            <div class="item-info">
+              <span class="punto-verde"></span> {{ item.categoria }}
+            </div>
+            <span class="frecuencia-texto">{{ item.frecuencia }}</span>
+            <span class="fecha-texto">{{ item.fecha }}</span>
+            <span class="item-monto alinear-derecha">Q {{ item.monto | number:'1.2-2' }}</span>
+          </div>
+        </div>
+        <div class="panel-footer">
+          <span>Total Ingresos</span>
+          <strong>Q {{ totalPresupuestado | number:'1.2-2' }}</strong>
+        </div>
+      </ng-container>
+
+      <ng-template #sinPresupuesto>
+        <div class="estado-vacio">
+          <p>No hay registros disponibles</p>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+  <div class="tarjeta-total-general">
+    <div class="info-total">
+      <h3>Total General Acumulado de Todos los Meses</h3>
+      <h2>Q {{ totalGeneralAcumulado | number:'1.2-2' }}</h2>
+      <p>Suma de todos los registros listados</p>
+    </div>
+    <div class="icono-saco">
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#2b5797" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+        <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
+        <circle cx="18" cy="12" r="1"></circle>
+      </svg>
+    </div>
+  </div>
+
+  <div class="footer-final-nota">
+    <span>Mostrando todas las entradas recientes</span>
+  </div>
+
+</div>
