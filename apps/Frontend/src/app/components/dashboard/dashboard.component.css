@@ -335,8 +335,7 @@
     display: grid;
     grid-template-columns: 1.2fr 1fr;
     gap: 20px;
-    flex-grow: 1; 
-    overflow: hidden;
+    flex-grow: 0; /* Evita que se estiren de más hacia arriba */
 }
 
 .tarjeta-panel {
